@@ -8,12 +8,10 @@ class drawing(Base):
 
     id = Column(Integer, primary_key=True)
     dwg_num = Column(String(12))
-    revision = Column(String(3))
     created = Column(Date, default=datetime.utcnow())
 
-    def __init__(self, dwg_num, revision):
+    def __init__(self, dwg_num):
         self.dwg_num = dwg_num
-        self.revision = revision
 
     def __repr__(self):
-        return f'<drawing: {self.dwg_num}{self.revision}>'
+        return f'<drawing: {self.dwg_num}>'

@@ -1,7 +1,8 @@
 import cv2
 from pdf2image import convert_from_path
 import os
-
+from class_drawing import drawing
+from base import Session, engine, Base
 
 def read_qr_code(filename):
     try:
@@ -49,13 +50,20 @@ def qrcode_reader(path):
     dwg_list = []
     dwg_with_qr = filter(lambda c: c[1] != '' and c[1] != None, result)  # filter the list where not equal to None
 
+    Base.metadata.create_all(engine)
+    session = Session()
+
     for dwg in dwg_with_qr:
         dwgnumber = str(dwg[1])
         if dwgnumber != '':
-            dwgnumber = dwgnumber[-8:]
+            dwgnumber = dwgnumber[-12:]
             dwg_list.append(dwgnumber)
         else:
             pass
+
+        entry_database = drawing(dwgnumber)
+        session.add(entry_database)
+        session.commit()
 
     return dwg_list
 

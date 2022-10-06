@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from _datetime import datetime
 import qrcode
 from qrcode_reader import qrcode_reader
+from base import Session, engine, Base
 
 # Runserver using the below command
 # python3 app.py
@@ -22,21 +23,6 @@ db.init_app(app1)
 # from app1 import db
 # db.create_all() # it will generate drawings.db
 
-class drawing(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    dwg_num = db.Column(db.String(12))
-    revision = db.Column(db.String(3))
-    created = db.Column(db.Date, default=datetime.utcnow())
-
-    def __init__(self, dwg_num, revision, created):
-        self.dwg_num = dwg_num
-        self.revision = revision
-        self.date = created
-
-    def __repr__(self):
-        return f'<dwg number: {self.dwg_num}>'
-
-
 @app1.route('/')
 def home():
     return render_template('home.html')
@@ -52,9 +38,12 @@ def validate(dwg_num):
 
 @app1.route('/goodforconstruction/<string:dwg_num>')
 def good_for_construction(dwg_num):
-    # open the database and check if dwg_num is found in the database.
-    return f'<h1>Drawing Number "{dwg_num}" is Good for Construction</h1>'
-
+    session: object = Session()
+    
+    if session.query(drawing).filter(drawing.dwg_num == dwg_num).first():
+        return f'<h2>Drawing Number "{dwg_num}" is Good for Construction</h2>'
+    else:
+        return f'<h2>This drawing is Not Good for Construction</h2>'
 
 @app1.route('/goodforconstruction/scanning')
 def scanning():
@@ -71,7 +60,6 @@ def register():
     else:
 
         return render_template('Register.html')
-
 
 if __name__ == "__main__":
     app1.run(debug=True)
