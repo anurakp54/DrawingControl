@@ -3,6 +3,7 @@ from pdf2image import convert_from_path
 import os
 from class_drawing import drawing
 from base import Session, engine, Base
+from _datetime import datetime
 
 def read_qr_code(filename):
     try:
@@ -61,7 +62,7 @@ def qrcode_reader(path):
             dwg_list.append(dwgnumber)
         else:
             pass
-        entry_database = drawing(dwgnumber, revision)
+        entry_database = drawing(dwgnumber, revision, datetime.utcnow())
         session.add(entry_database)
         session.commit()
 

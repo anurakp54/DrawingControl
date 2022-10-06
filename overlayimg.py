@@ -1,6 +1,6 @@
 from PIL import Image
 
-img1 = Image.open(r"/Users/mbpro/PycharmProjects/flask/data/0.png")
+img1 = Image.open(r"/Users/mbpro/PycharmProjects/flask/data/1.png")
 img2 = Image.open(r"/Users/mbpro/PycharmProjects/flask/Static/temp_qr.png")
 print(img1.size)
 print(img2.size)

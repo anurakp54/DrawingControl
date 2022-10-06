@@ -40,7 +40,7 @@ def validate(dwg_num):
 @app1.route('/goodforconstruction/<string:dwg_num>')
 def good_for_construction(dwg_num):
     session: object = Session()
-    match_dwg = session.query(drawing).filter(drawing.dwg_num == dwg_num[:-2]).first()
+    match_dwg = session.query(drawing).filter(drawing.dwg_num == dwg_num[:-2]).order_by(drawing.created.desc()).first()
     if dwg_num[-2:] == match_dwg.revision:
         session.close()
         return f'<h2>Drawing Number "{dwg_num}" is Good for Construction</h2>'
