@@ -16,4 +16,4 @@ class drawing(Base):
         self.revision = revision
 
     def __repr__(self):
-        return f'<drawing: {self.dwg_num}>'
+        return f'<drawing: {self.dwg_num}{self.revision}>'
