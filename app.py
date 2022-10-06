@@ -40,16 +40,17 @@ def validate(dwg_num):
 @app1.route('/goodforconstruction/<string:dwg_num>')
 def good_for_construction(dwg_num):
     session: object = Session()
-    
-    if session.query(drawing).filter(drawing.dwg_num == dwg_num).first():
+    match_dwg = session.query(drawing).filter(drawing.dwg_num == dwg_num[:-2]).first()
+    if dwg_num[-2:] == match_dwg.revision:
+        session.close()
         return f'<h2>Drawing Number "{dwg_num}" is Good for Construction</h2>'
     else:
+        session.close()
         return f'<h2>This drawing is Not Good for Construction</h2>'
-
 @app1.route('/goodforconstruction/scanning')
 def scanning():
     drawing_list = qrcode_reader(PATH)
-    return f'<h1>{drawing_list} are scanned from the Network folder to the Database </h1>'
+    return f'<h1>{drawing_list} are scanned from the Network folder to the Databasequ </h1>'
 
 
 @app1.route('/register', methods=["POST", "GET"])

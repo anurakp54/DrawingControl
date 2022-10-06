@@ -13,6 +13,6 @@ if session.query(drawing).filter(drawing.dwg_num == 'C200345566A1').first():
 else:
     print(f'<h1>This drawing is Not Good for Construction</h1>')
 
-content = session.query(drawing).filter(drawing.dwg_num.like('%345%')).all()
-print(content)
+content = session.query(drawing).filter(drawing.dwg_num.like('%345%')).first()
+print(content.revision)
 session.close()

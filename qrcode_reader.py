@@ -56,12 +56,12 @@ def qrcode_reader(path):
     for dwg in dwg_with_qr:
         dwgnumber = str(dwg[1])
         if dwgnumber != '':
-            dwgnumber = dwgnumber[-12:]
+            revision = dwgnumber[-2:]
+            dwgnumber = dwgnumber[-12:-2]
             dwg_list.append(dwgnumber)
         else:
             pass
-
-        entry_database = drawing(dwgnumber)
+        entry_database = drawing(dwgnumber, revision)
         session.add(entry_database)
         session.commit()
 
