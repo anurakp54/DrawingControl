@@ -6,6 +6,7 @@ from _datetime import datetime
 import qrcode
 from qrcode_reader import qrcode_reader
 from base import Session, engine, Base
+from class_drawing import drawing
 
 # Runserver using the below command
 # python3 app.py
@@ -48,7 +49,7 @@ def good_for_construction(dwg_num):
 @app1.route('/goodforconstruction/scanning')
 def scanning():
     drawing_list = qrcode_reader(PATH)
-    return f'<h1>{drawing_list} are scanned to the folder </h1>'
+    return f'<h1>{drawing_list} are scanned from the Network folder to the Database </h1>'
 
 
 @app1.route('/register', methods=["POST", "GET"])
