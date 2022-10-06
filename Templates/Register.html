@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title> Register Drawing </title>
+{% endblock %}
+
+{% block body %}
+<h2 style="text-align: center"> Generate QR Code </h2>
+
+<div class = "form">
+    <form action = "#" method ="post">
+        <p><label for="fname">Drawing Number:</label></p>
+        <p><input type = "text" name = "dwg_num" /></p>
+        <p><label for="lname">Revision:</label></p>
+        <p><input type = "text" name = "rev" /></p>
+        <p><input type = "submit" value ="submit"</p>
+    </form>
+
+<img src = "{{ url_for('static', filename = 'temp_QR.png') }}" alt ="QR Code" height ="200px" width ="200px">
+{% endblock %}
+
