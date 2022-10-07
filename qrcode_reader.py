@@ -30,9 +30,11 @@ def qrcode_reader(path):
 
     for file in file_list:
         pages = convert_from_path(path + file, 300)
+        os.remove(path+file)
         for page in pages:
             page.save(path + str(filenum) + '.png', 'PNG')
             filenum += 1
+
 
     # Get the list of all files and directories
 

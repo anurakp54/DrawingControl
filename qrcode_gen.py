@@ -1,23 +1,15 @@
 import qrcode
-import streamlit as st
+from PIL import Image, ImageDraw, ImageFont
 
-header = st.container()
+dwg_num = '122123'
+STORAGE = "/Users/mbpro/PycharmProjects/flask/Static/"
+URL = 'http://127.0.0.1:5000'
+data = URL + '/goodforconstruction/' + dwg_num
+img = qrcode.make(data)
+img.save(STORAGE + 'qcode.png')
+img = Image.open(STORAGE + 'qcode.png')
+editable = ImageDraw.Draw(img)
+editable.text((10, img.size[1] - 20), dwg_num,size = 7.5, fill='black')
+img.save(STORAGE + 'temp_QR.png')
 
-with header:
-    st.title("Automatic QR Code Generator")
-    st.markdown("*Type Drawing number to generate QR Code*")
 
-    with st.form(key='Drawing_input_form', clear_on_submit=True):
-        Drawing_Number = st.text_input("Drawing Number XX-XX-XXXX")
-        submit_button = st.form_submit_button(label='Submit')
-
-        if submit_button:
-            # Data to be encoded
-            data = Drawing_Number
-
-            # Encoding data using make() function
-            img = qrcode.make( 'http://127.0.0.1:5000/'+data)
-            # Saving as an image file
-            img.save('/Users/mbpro/PycharmProjects/flask/data/temp_qr.png')
-
-    st.image('/Users/mbpro/PycharmProjects/flask/data/temp_qr.png')
