@@ -28,7 +28,11 @@ db.init_app(app)
 # db.create_all() # it will generate drawings.db
 
 @app.route('/')
-def home():
+def root():
+    return redirect((url_for('index')))
+
+@app.route('/index')
+def index():
     return render_template('index.html')
 
 @app.route('/login')
