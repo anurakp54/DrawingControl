@@ -15,8 +15,8 @@ from PIL import Image, ImageDraw, ImageFont
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///drawings.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-PATH: str = "/Users/mbpro/PycharmProjects/flask/data/"
-STORAGE = "/Users/mbpro/PycharmProjects/flask/Static/"
+PATH: str = "data"
+STORAGE = "Static"
 URL = 'http://127.0.0.1:5000'
 
 db = SQLAlchemy(app)
@@ -61,11 +61,11 @@ def good_for_construction(dwg_num):
         return f'<h2>This drawing is Not Good for Construction</h2>'
 @app.route('/goodforconstruction/scanning')
 def scanning():
-    try:
-        drawing_list = qrcode_reader(PATH)
+    drawing_list = qrcode_reader(PATH)
+    if not drawing_list:
+        return f'<h2> The folder is empty. </h2>'
+    else:
         return f'<h2>{drawing_list} are scanned and stored to database. The original in Network folder was also deleted. </h2>'
-    except:
-        return f'<h2> The folder is empty</h2>'
 
 @app.route('/register', methods=["POST", "GET"])
 def register():
